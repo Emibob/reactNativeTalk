@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background="#330066">
+					<h2 >Building A Production-quality App With React Native</h2>
+					<h3 style="padding: 3%; color: #B3B3D7">Tooling, testing & insights</h3>
+				</section>
+
+				<section data-background="#400080">
+					<h2>The Team</h2>
+					<ul>
+						<li style="padding: 2%">Ben Wilson</li>
+						<li style="padding: 2%">Carlo Francisco</li>
+						<li style="padding: 2%">Ilana Sufrin</li>
+						<li style="padding: 2%">Emily O'Brien</li>
+					</ul>
+				</section>
+
+			<section>
+				<section data-background="#4c0099">
+					<h2>What is This AM?</h2>
+					<img src="http://s3.r29static.com//bin/entry/d53/x,80/1504352/image.jpg"/>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #4c0099">Demo time</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #4c0099">Prototype vs. production</h2>
+				</section>
+			</section>
+
+			<section>
+				<section data-background="#5900b3">
+					<h2>Testing This AM</h2>
+					<img src="http://s2.r29static.com//bin/public/1a0/x/1505779/image.png" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Basics</h2>
+					<ol style="color:#5900b3">
+						<li style="color:#5900b3">Unit tests with Jest</li>
+						<li style="color:#5900b3">Feature tests with Calabash</li>
+						<li style="color:#5900b3">Continuous Integration (CI)</li>
+					</ol>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">1. Unit Tests</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Unit Tests</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">Flux apps have a lot of moving parts</li>
+						<li style="color: #5900b3">Unit tests only buy you so much. BUT, we believe code coverage is still important</li>
+						<li style="color: #5900b3">Actions, Components, Stores all tested</li>
+						<li style="color: #5900b3">Use Jest</li>
+					</ul>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Unit Tests: Jest</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">Facebook-endorsed unit test framework</li>
+						<li style="color: #5900b3">Pretty much Jasmine, with the addition of automatic mocking</li>
+						<li style="color: #5900b3; font-weight: bold">Any module loaded by a 'require' function is mocked by default</li>
+						<li style="color: #5900b3">Can specify exceptions</li>
+					</ul>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Jest pain point: Mocking RN components</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">Jest built with React (not React Native) in mind first</li>
+						<li style="color: #5900b3">Workaround required for testing our custom components that use React Native components</li>
+						<li style="color: #5900b3; font-weight: bold">Jest's auto-mocking library does not play nice with the 'react-native' module</li>
+						<li style="color: #5900b3">Want to be able to test rendered output of a RN component like "Image" or "Text"</li>
+					</ul>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
+					<img src="http://s3.r29static.com//bin/public/42a/x/1505768/image.png" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">2. Feature Tests</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Feature Tests</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">Calabash + Cucumber (+ Fake API + Webpack)</li>
+						<li style="color: #5900b3">Calabash launches an instance of the simulator and interacts directly with the app</li>
+						<li style="color: #5900b3">Calabash interactions are limited, but can swipe through app, view text, get image names (via accessibility labels)</li>
+					</ul>
+				</section>
+				<section data-background="#fff">
+					<img src="http://s2.r29static.com//bin/public/261/x/1505769/image.png" />
+				</section>
+				<section data-background="#fff">
+					<img src="http://s3.r29static.com//bin/public/b52/x/1505770/image.png" />
+					<img src="http://s1.r29static.com//bin/public/ec0/x/1505771/image.png" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">3. Continuous Intergration (CI)</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">CI Setup</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">At Refinery29, we use Travis</li>
+						<li style="color: #5900b3">Travis has pre-built images for running different types of test suites</li>
+						<li style="color: #5900b3">We use an OS X image that installs Xcode by default</li>
+						<li style="color: #5900b3">Let's take a look at Travis.yml...</li>
+					</ul>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">(Show .travis.yml here)</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">Further optimizations to Travis build</h2>
+					<ul style="color: #5900b3">
+						<li style="color: #5900b3">Instead of using 'sleep' statements, write some type of script that boots up Webpack in the background then automatically continues with the build when it has booted</li>
+						<li style="color: #5900b3">Parallelize into multiple builds (we have done this with our mobile web app)</li>
+						<li style="color: #5900b3">Write more feature tests!</li>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<section data-background="#6600cc">
+					<h2>Leveraging</h2>
+					<img src="http://s3.r29static.com//bin/public/c52/x/1505396/image.png" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #6600cc">Demo: How to use a library in React Native</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #6600cc">Forking Is Your Friend</h2>
+				</section>
+				<section data-background="#fff">
+					<p style="color: #6600cc">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
+					<img src="http://s2.r29static.com//bin/public/f54/x/1505414/image.png" />
+				</section>
+				<section data-background="#fff">
+					<p style="color: #6600cc">Now, whenever want to send a custom dimension we can use it as follows:</p>
+					<img src="http://s3.r29static.com//bin/public/06a/x/1505418/image.png" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #6600cc">Community</h2>
+				</section>
+				<section data-background="#fff">
+					<img src="http://s3.r29static.com//bin/public/d11/x/1505395/image.png" />
+				</section>
+				<section data-background="#fff">
+					<img src="http://s3.r29static.com//bin/public/b54/x/1505394/image.png" />
+				</section>
+			</section>
+
+			<section data-background="#7300e6">
+				<section>
+					<h2>Helpful Utilities</h2>
+					<h3>(Things you may want to steal)</h3>
+					<img src="https://media.giphy.com/media/3I0Fler5qUsU0/giphy.gif" />
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #7300e6">Font Scaling</h2>
+					<pre><code>'use strict';
+
+const React = require('react-native');
+const {Text} = React;
+const _ = require('lodash');
+
+export class StaticText extends Text {
+  componentDidMount() {
+    this.setState({
+      allowFontScaling: false,
+    });
+  }
+
+  render() {
+    return React.createElement(Text, _.extend({}, this.props, this.state));
+  }
+}
+</code></pre>
+					<aside class="notes">
+						A problem we ran into was that if you have an iPhone, you can set the text to scale larger. Since most of our app is text, that presented a problem for us. 
+
+						With React Native, you can set allowFontScaling to false to prevent these inconsistencies in text size. 
+
+						To keep our Text elments clean & to prevent issues with developers forgetting to add that property every time we need to add Text, we created this utilitiy. It's a good example of how you might add properties to a custom element.
+					</aside>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #7300e6">Image With Dynamic Label</h2>
+					<pre><code>'use strict';
+
+const React = require('react-native');
+const {Image} = React;
+const _ = require('lodash');
+const MISSING_LABEL_ERROR = "You tried to render an ImageWithDynamicLabel 
+with a static image source. For static images, use a standard Image
+component and manually specify an 'accessibilityLabel' prop.";
+
+export class ImageWithDynamicLabel extends Image {
+  componentDidMount() {
+    this.setState({
+      accessibilityLabel: this._getLabel()
+    });
+  }
+
+  render() {
+    return React.createElement(Image, _.extend({}, this.props, this.state));
+  }
+
+  _getLabel() {
+    if (!this.props.source.uri) { //Incorrect use case
+      throw new Error(MISSING_LABEL_ERROR);
+    }
+    if (this.props.accessibilityLabel) { //Nothing to see here
+      return this.props.accessibilityLabel;
+    }
+    else {
+      var filename = _.last(this.props.source.uri.split('/'));
+      return _.first(filename.split('.'));
+    }
+  }
+}</code></pre>
+					<aside class="notes">
+						This utility component will provide a dynamic accessibilityLabel for network images. This is particularly helpful when, like in our case we have no idea what the image in, let's say an article, will be. This allows us to set the label to the image file name. This helps make our app accessible & also helps us to find our images in our feature tests.
+
+						This is similar to the last example, but here you can see how we allow developers to overwrite the default value of the accessibilityLavel if they want to, so it's a slightly different pattern.
+					</aside>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #7300e6">Italicize</h2>
+					<pre><code>'use strict';
+
+const parse5 = require('parse5');
+const React = require('react-native');
+
+let {StyleSheet, Text} = React;
+let {StaticText} = require('../components/StaticText');
+
+var handleItalics = function(text, isHeadline) {
+    var parser = new parse5.Parser();
+    var fragment = parser.parseFragment(text);
+
+    return _.compact(_.map(fragment.childNodes, function(node) {
+      if (node.nodeName === '#text') {
+        return _.unescape(node.value);
+      } else if (node.nodeName === 'em' && isHeadline) {
+        return (<StaticText style={styles.emBold}>{_.unescape(node.childNodes[0].value)}</StaticText>);
+      } else if (node.nodeName === 'em' && !isHeadline) {
+        return (<StaticText style={styles.em}>{_.unescape(node.childNodes[0].value)}</StaticText>);
+      }
+      return null;
+    }));
+}
+
+var styles = StyleSheet.create({
+  em : {
+    fontFamily: 'TiemposText-RegularItalic',
+  },
+  emBold : {
+    fontFamily: 'PlayfairDisplay-BoldItalic',
+  },
+});
+
+module.exports = handleItalics;</code></pre>
+				</section>
+			</section>
+			<section>
+				<section data-background="#7f00ff">
+					<h2>Native Modules</h2>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #7f00ff">Loading an Ad</h2>
+				</section>
+			</section>
+
+				<section>
+					<section data-background="#8c1aff" id="fragments">
+						<h1>Thank you!</h1>
+						<p class="fragment">Oh wait...</p>
+						<p class="fragment roll-in">One more thing</p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+				</section>
+
+			<section data-background="https://media.giphy.com/media/3IaC81YOZudfa/giphy.gif" data-background-repeat="repeat">
+				<div style="background-color: white; padding: 10%; color: #9933ff;">
+					<h2 style="color: #fff; padding: 2%; background-color: #9933ff">We're Hiring</h2>
+						<p style="padding: 1%">Director of Product Design</p>
+						<p style="padding: 1%">Front-End Engineer, Publishing Platform</p>
+						<p style="padding: 1%">QA Automation Engineer</p>
+						<p style="padding: 1%">Senior Front-End Engineer, Desktop / Mobile</p>
+						<p style="padding: 1%">Senior Platform Engineer, API</p>
+				</div>
+			</section>
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
