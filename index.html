@@ -136,7 +136,7 @@
 					<img src="http://s1.r29static.com//bin/public/ec0/x/1505771/image.png" />
 				</section>
 				<section data-background="#fff">
-					<h2 style="color: #5900b3">3. Continuous Intergration (CI)</h2>
+					<h2 style="color: #5900b3">3. Continuous Integration (CI)</h2>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">CI Setup</h2>
@@ -217,9 +217,9 @@ export class StaticText extends Text {
 }
 </code></pre>
 					<aside class="notes">
-						A problem we ran into was that if you have an iPhone, you can set the text to scale larger. Since most of our app is text, that presented a problem for us. 
+						A problem we ran into was that if you have an iPhone, you can set the text to scale larger. Since most of our app is text, that presented a problem for us.
 
-						With React Native, you can set allowFontScaling to false to prevent these inconsistencies in text size. 
+						With React Native, you can set allowFontScaling to false to prevent these inconsistencies in text size.
 
 						To keep our Text elments clean & to prevent issues with developers forgetting to add that property every time we need to add Text, we created this utilitiy. It's a good example of how you might add properties to a custom element.
 					</aside>
@@ -231,7 +231,7 @@ export class StaticText extends Text {
 const React = require('react-native');
 const {Image} = React;
 const _ = require('lodash');
-const MISSING_LABEL_ERROR = "You tried to render an ImageWithDynamicLabel 
+const MISSING_LABEL_ERROR = "You tried to render an ImageWithDynamicLabel
 with a static image source. For static images, use a standard Image
 component and manually specify an 'accessibilityLabel' prop.";
 
