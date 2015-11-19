@@ -1,3 +1,5 @@
+#PS - I used inline styles because #tired & nobody's gonna see the code. Don't judge.
+
 # reveal.js [![Build Status](https://travis-ci.org/hakimel/reveal.js.png?branch=master)](https://travis-ci.org/hakimel/reveal.js)
 
 A framework for easily creating beautiful presentations using HTML. [Check out the live demo](http://lab.hakim.se/reveal-js/).
