@@ -63,7 +63,7 @@
 			<section>
 				<section data-background="#5900b3">
 					<h2>Testing This AM</h2>
-					<img src="http://s2.r29static.com//bin/public/1a0/x/1505779/image.png" />
+					<img src="https://media.giphy.com/media/7MZ0v9KynmiSA/giphy.gif" />
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">Basics</h2>
@@ -177,28 +177,94 @@
 					<img src="http://s3.r29static.com//bin/public/c52/x/1505396/image.png" />
 				</section>
 				<section data-background="#fff">
-					<h2 style="color: #6600cc">Demo: How to use a library in React Native</h2>
+					<h2 style="color: #6600cc">Demo: How to add a React Native library in Xcode</h2>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #6600cc">Forking Is Your Friend</h2>
 				</section>
 				<section data-background="#fff">
-					<p style="color: #6600cc">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
-					<img src="http://s2.r29static.com//bin/public/f54/x/1505414/image.png" />
-				</section>
-				<section data-background="#fff">
-					<p style="color: #6600cc">Now, whenever we want to send a custom dimension we can use it as follows:</p>
-					<img src="http://s3.r29static.com//bin/public/06a/x/1505418/image.png" />
-				</section>
-				<section data-background="#fff">
-					<h2 style="color: #6600cc">Community</h2>
-				</section>
-				<section data-background="#fff">
-					<img src="http://s3.r29static.com//bin/public/d11/x/1505395/image.png" />
-				</section>
-				<section data-background="#fff">
-					<img src="http://s3.r29static.com//bin/public/b54/x/1505394/image.png" />
-				</section>
+          <p style="color: #6600cc">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
+          <pre style="width: 100%; height: 100%"><code>'use strict';
+
+var _ = require('lodash');
+
+class Analytics {
+  constructor(trackingId, clientId, version) {
+    this.version = version || 1;
+    this.trackingId = trackingId;
+    this.clientId = clientId;
+    this.customDimensions = [];
+  }
+
+  setCustomDimension(cd) {
+    this.customDimensions.push(cd);
+  }
+
+  send(hit) {
+
+    hit.set({
+      v: this.version,
+      tid: this.trackingId,
+      cid: this.clientId
+    });
+
+    if (this.customDimensions.length) {
+      _.each(this.customDimensions, function(cd) {
+        _.mapKeys(cd, function(val, key) {
+          var obj = {};
+          obj[key] = val;
+          hit.set(obj);
+        });
+      });
+    }
+
+    fetch('https://ssl.google-analytics.com/collect', {
+      method: 'post',
+      body: hit.toQueryString()
+    });
+  }
+}
+
+module.exports = Analytics;
+          </code></pre>
+        </section>
+        <section data-background="#fff">
+          <p style="color: #6600cc">Now, whenever we want to send a custom dimension we can use it as follows:</p>
+          <pre style="width: 100%; height: 100%"><code>const APP_NAME = "ThisAM";
+const APP_VERSION = "1";
+const APP_ID = "com.refinery29.thisAM";
+const TRACKING_ID = 'UA-315022-15';
+
+import {
+  Analytics,
+  Hits as GAHits,
+  Tracking as GATracking
+} from 'react-native-google-analytics';
+
+var React = require('react-native');
+var {NativeModules} = React;
+
+export default {
+  trackScreenView: function(screenName, date) {
+    GATracking.getClientId(function(err, clientId) {
+      var analytics = new Analytics(TRACKING_ID, clientId);
+      analytics.setCustomDimension({cd1: date});
+
+      var screenView = new GAHits.ScreenView(APP_NAME, APP_VERSION, APP_ID, clientId, screenName);
+      analytics.send(screenView);
+    });
+  },
+  trackEvent: function(category, action, label, date) {
+    GATracking.getClientId(function(err, clientId) {
+      var analytics = new Analytics(TRACKING_ID, clientId);
+      analytics.setCustomDimension({cd1: date});
+
+      var gaEvent = new GAHits.Event(category, action, label, 100);
+      analytics.send(gaEvent);
+    });
+  }
+};</code></pre>
+        </section>
 			</section>
 
 			<section data-background="#7300e6">
@@ -356,10 +422,14 @@ module.exports = ᐱ;</code></pre>
 			</section>
 
 				<section>
-					<section data-background="#8c1aff" id="fragments">
+					<section data-background="#8c1aff">
 						<h1>Thank you!</h1>
-						<p class="fragment">Oh wait...</p>
-						<p class="fragment roll-in">One more thing</p>
+						<ul>
+							<li>Ben Wilson, @benmidi </li>
+							<li>Carlo Francisco, @jcfrancisco</li>
+							<li>Ilana Sufrin, @IlanaSufrin</li>
+							<li>Emily O'Brien, @Emily_0Brien</li>
+						</ul>
 
 						<aside class="notes">
 							This slide has fragments which are also stepped through in the notes window.
