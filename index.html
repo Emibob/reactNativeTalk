@@ -228,7 +228,6 @@ end</code></pre>
 						<li style="color: #5900b3">At Refinery29, we use Travis</li>
 						<li style="color: #5900b3">Travis has pre-built images for running different types of test suites</li>
 						<li style="color: #5900b3">We use an OS X image that installs Xcode by default</li>
-						<li style="color: #5900b3">Let's take a look at Travis.yml...</li>
 					</ul>
 				</section>
 				<section data-background="#fff" data-transition="none">
@@ -260,7 +259,7 @@ xcode_scheme: ThisAM-cal
     ;fi</code></pre>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<pre><code>script:
+					<pre style="width:1100px;"><code>script:
   - if [[ "$TEST_SUITE" == "unit" ]]; then npm test; fi
   - if [[ "$TEST_SUITE" == "features" ]]; then DEVICE_TARGET="iPhone 5s (9.0)" cucumber spec/; fi</code></pre>
 				</section>
