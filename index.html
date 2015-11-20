@@ -135,7 +135,7 @@ export default extend({}, React, mockedComponents);</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
-					<pre><code class = 'javascript'>var createMockComponent = function(componentName) {
+					<pre><code class='javascript'>var createMockComponent = function(componentName) {
   return React.createClass({
     /* Our mocked React Native components will share this render method.
      *
@@ -165,14 +165,59 @@ export default extend({}, React, mockedComponents);</code></pre>
 					</ul>
 				</section>
 				<section data-background="#fff">
+				<pre><code class='ruby'>Feature: Scrolling through Cards
 
-					<img src="http://s2.r29static.com//bin/public/261/x/1505769/image.png" />
+Scenario: User scrolls from Landing Page to Done Card
+  Given I am on the Landing Page
+  And I wait until I see the day of the week
 
+  When I scroll down and wait for a second
+  Then I should see "Headline Big Machine Snowglobe Speak"
 
+  When I scroll down and wait for a second
+  Then I should see "Flashing Lights Wild Eyes"
+
+  When I scroll down and wait for a second
+  Then I should see "Burnt Toast I Remember It"
+
+  When I scroll down and wait for a second
+  Then I should see the "oktobernight__Jellyfish_iStock" image
+
+  When I scroll down and wait for a second
+  Then I should see "Thats Much Cooler Than Mine Flew Me To"
+
+  When I scroll down and wait for a second
+  Then I should see "Burning It Down Even Now Forever"
+
+  When I scroll down and wait for a second
+  Then I should see "Tribeca Just Trees Glowing In The Dark"
+
+  When I scroll down and wait for a second
+  Then I should see the "oktobernight__Jellyfish_iStock" image
+
+  When I scroll down and wait for a second
+  Then I should see the "done text" image
+  # https://placekitten.com/275/200
+  Then I should see the "200" image</code></pre>
 				</section>
 				<section data-background="#fff">
-					<img src="http://s3.r29static.com//bin/public/b52/x/1505770/image.png" />
-					<img src="http://s1.r29static.com//bin/public/ec0/x/1505771/image.png" />
+					<pre><code class='ruby'>When /^I am on the Landing Page$/ do
+  element_exists("view")
+end
+
+When /^I wait until I see the day of the week$/ do
+  step 'I wait to see "WEDNESDAY"'
+end
+
+Then /^I should see the "([^\"]*)" image$/ do |filename|
+  labels = query("RCTImageView").map{ |o| o["label"] }
+  expect(labels).to include(filename)
+end
+
+When /^I scroll (.*) and wait for a second$/ do |direction|
+  step "I scroll #{direction}"
+  sleep 1
+end</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">3. Continuous Integration (CI)</h2>
@@ -193,19 +238,34 @@ export default extend({}, React, mockedComponents);</code></pre>
 					<img src="http://s3.r29static.com//bin/public/f26/x/1508609/image.png"/>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<img style="top:-80px;position:relative;" src="http://s2.r29static.com//bin/public/eb5/x/1508620/image.png"/>
+					<pre><code>osx_image: xcode7
+language: objective-c
+xcode_project: app/ThisAm.xcodeproj
+xcode_scheme: ThisAM-cal						
+					</code></pre>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<img style="top:-80px;position:relative;" src="http://s3.r29static.com//bin/public/1fa/x/1508625/image.png"/>
+					<pre><code>env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=features</code></pre>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<img style="top:-80px;position:relative;" src="http://s3.r29static.com//bin/public/fe9/x/1508626/image.png"/>
+					<pre><code>before_script:
+  - (if [[ "$TEST_SUITE" == "features" ]]; then npm start; fi) &
+  - if [[ "$TEST_SUITE" == "features" ]]; then sleep 90; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then curl http://127.0.0.1:8080/index.ios.bundle > /dev/null; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then
+      set -o pipefail
+      && npm run xcbuild-cal | xcpretty -c -f `xcpretty-travis-formatter`
+    ;fi</code></pre>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<img style="top:-80px;position:relative;" src="http://s2.r29static.com//bin/public/1fd/x/1508627/image.png"/>
+					<pre><code>script:
+  - if [[ "$TEST_SUITE" == "unit" ]]; then npm test; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then DEVICE_TARGET="iPhone 5s (9.0)" cucumber spec/; fi</code></pre>
 				</section>
 				<section data-background="#fff" data-transition="none">
-					<img style="top:-80px;position:relative;" src="http://s1.r29static.com//bin/public/c1b/x/1508628/image.png"/>
+					<img style="top:-80px;position:relative;" src="http://s1.r29static.com//bin/public/b1b/x/1508711/image.png"/>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">Further optimizations to Travis build</h2>
