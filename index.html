@@ -111,7 +111,47 @@
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
-					<img src="http://s3.r29static.com//bin/public/42a/x/1505768/image.png" />
+					<pre><code class='javascript'>var React = require.requireActual('react'),
+    mockedComponents = {}; //???
+
+export default extend({}, React, mockedComponents);</code></pre>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
+					<pre><code class='javascript'>mockedComponents = {
+  ActivityIndicatorIOS: createMockComponent('ActivityIndicatorIOS'),
+  Image: createMockComponent('Image'),
+  ListView: ListView,
+  View: createMockComponent('View'),
+  Text: createMockComponent('Text'),
+  TouchableHighlight: createMockComponent('TouchableHighlight'),
+  ScrollView: createMockComponent('ScrollView'),
+  Navigator: createMockComponent('Navigator'),
+  WebView: createMockComponent('WebView')
+};
+
+// (new Image()).render() -&gt; "&lt;Image&gt;"
+</code></pre>
+				</section>
+				<section data-background="#fff">
+					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
+					<pre><code class = 'javascript'>var createMockComponent = function(componentName) {
+  return React.createClass({
+    /* Our mocked React Native components will share this render method.
+     *
+     * This JSX:
+     * &lt;Image source='background.jpg' />
+     *
+     * will be rendered as this string (sans backticks):
+     * `&lt;Image source='background.jpg'>&lt;/Image&gt;`
+     *
+     */
+    render: function() {
+      var element = React.createElement(componentName);
+      return React.cloneElement(element, this.props);
+    }
+  });
+};</pre></code>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">2. Feature Tests</h2>
