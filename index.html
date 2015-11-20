@@ -189,8 +189,8 @@
 					<h2 style="color: #6600cc">Forking Is Your Friend</h2>
 				</section>
 				<section data-background="#fff">
-          <p style="color: #6600cc">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
-          <pre style="width: 100%; height: 100%"><code>'use strict';
+          <p style="color: #6600cc; margin-top: -200px">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
+          <pre style="width: 100%; height: 100%"><code style="max-height: 880px">'use strict';
 
 var _ = require('lodash');
 
@@ -235,8 +235,8 @@ module.exports = Analytics;
           </code></pre>
         </section>
         <section data-background="#fff">
-          <p style="color: #6600cc">Now, whenever we want to send a custom dimension we can use it as follows:</p>
-          <pre style="width: 100%; height: 100%"><code>const APP_NAME = "ThisAM";
+          <p style="color: #6600cc; margin-top: -120px">Now, whenever we want to send a custom dimension we can use it as follows:</p>
+          <pre style="width: 100%; height: 100%"><code style="max-height: 880px">const APP_NAME = "ThisAM";
 const APP_VERSION = "1";
 const APP_ID = "com.refinery29.thisAM";
 const TRACKING_ID = 'UA-315022-15';
@@ -280,9 +280,9 @@ export default {
 					<img src="https://media.giphy.com/media/3I0Fler5qUsU0/giphy.gif" />
 				</section>
 				<section data-background="#fff">
-					<h2 style="color: #7300e6">Image With Dynamic Label</h2>
-					<p style="color: #7300e6">Automatically add a network image's source file name as the image's accessibility label</p>
-					<pre><code>'use strict';
+					<h2 style="color: #7300e6; margin-top: -200px">Image With Dynamic Label</h2>
+					<p style="color: #7300e6;">Automatically add a network image's source file name as the image's accessibility label</p>
+					<pre><code style="max-height: 880px">'use strict';
 
 const React = require('react-native');
 const {Image} = React;
@@ -320,18 +320,19 @@ export class ImageWithDynamicLabel extends Image {
 					<h2 style="color: #7300e6">Image Dimensions with Percentages</h2>
 				</section>
 				<section data-background="#fff">
+				<h2 style="color: #7300e6">Issues:</h2>
 				<ul>
-					<li style="color: #7300e6">In React Native, all Images are required to have a height & width to display</li>
-					<li style="color: #7300e6">These dimensions can only be pixel values right now</li>
-					<li style="color: #7300e6">For our Done screen, we wanted the GIF image to fill up as much of a designated area as possible, while still maintaining the image ratio (there are issues doing this with flex).</li>
+					<li style="color: #7300e6; padding: 2%">In React Native, all Images are required to have a height & width to display</li>
+					<li style="color: #7300e6; padding: 2%">These dimensions can only be pixel values right now</li>
+					<li style="color: #7300e6; padding: 2%">For our Done screen, we wanted the GIF image to fill up as much of a designated area as possible, while still maintaining the image ratio (there are issues doing this with flex).</li>
 				</ul>
 				</section>
 				<section data-background="#fff">
 					<img src="http://s2.r29static.com//bin/public/0aa/x/1508221/image.png" />
 				</section>
 				<section data-background="#fff">
-				<h2 style="color: #7300e6">Get all the percents</h2>
-					<pre><code>/***
+				<h2 style="color: #7300e6; margin-top: -240px">Get all the percents</h2>
+					<pre style="width: 1500px; margin-left: -240px"><code style="max-height: 980px">/***
 * A thing by Emily O'Brien
 ***/
 
@@ -380,8 +381,8 @@ var ᐱ = {
 module.exports = ᐱ;</code></pre>
 				</section>
 				<section data-background="#fff">
-				<h2 style="color: #7300e6">Use in store</h2>
-					<pre><code>setDoneCardDimensions() {
+				<h2 style="color: #7300e6; margin-top: -100px">Use in store</h2>
+					<pre style="width: 1200px; margin-left: -100px"><code style="max-height: 880px">setDoneCardDimensions() {
     var height,
         width,
         maxHeight,
@@ -414,8 +415,7 @@ module.exports = ᐱ;</code></pre>
 				</section>
 				<section data-background="#fff">
 				<h2 style="color: #7300e6">Example use in Done component's render()</h2>
-					<p style="color: #7300e6">ImageWithDynamicLabel style={[styles.image, {width: this.props.maxWidth, height: this.props.maxHeight}]} source={{uri: this.props.resource.source}}
-					</p>
+					<img src="http://s3.r29static.com//bin/public/565/x/1508705/image.png" />
 				</section>
 			</section>
 			<section>
