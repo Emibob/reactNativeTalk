@@ -105,7 +105,43 @@
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">__mocks__/react-native.js</h2>
-					<img src="http://s3.r29static.com//bin/public/42a/x/1505768/image.png" />
+					<pre><code>'use strict';
+
+const {extend} = require.requireActual('lodash');
+var React = require.requireActual('react');
+
+var createMockComponent = function(componentName) {
+  return React.createClass({
+    /* Our mocked React Native components will share this render method.
+     *
+     * This JSX:
+     * <Image source='background.jpg' />
+     *
+     * will be rendered as this string (sans backticks):
+     * `<Image source='background.jpg'></Image>`
+     *
+     */
+    render: function() {
+      var element = React.createElement(componentName);
+      return React.cloneElement(element, this.props);
+    }
+  });
+};
+
+var mockedComponents = {
+  ActivityIndicatorIOS: createMockComponent('ActivityIndicatorIOS'),
+  Image: createMockComponent('Image'),
+  ListView: ListView,
+  View: createMockComponent('View'),
+  Text: createMockComponent('Text'),
+  TouchableHighlight: createMockComponent('TouchableHighlight'),
+  ScrollView: createMockComponent('ScrollView'),
+  Navigator: createMockComponent('Navigator'),
+  WebView: createMockComponent('WebView')
+};
+
+export default extend({}, React, mockedComponents);
+</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">2. Feature Tests</h2>
@@ -119,14 +155,59 @@
 					</ul>
 				</section>
 				<section data-background="#fff">
+					<h2 style="color: #5900b3">scrolling.feature</h2>
+					<pre><code>Feature: Scrolling through Cards
 
-					<img src="http://s2.r29static.com//bin/public/261/x/1505769/image.png" />
+Scenario: User scrolls from Landing Page to Done Card
+  Given I am on the Landing Page
+  And I wait until I see the day of the week
 
+  When I scroll down and wait for a second
+  Then I should see "Headline Big Machine Snowglobe Speak"
 
+  When I scroll down and wait for a second
+  Then I should see "Flashing Lights Wild Eyes"
+
+  When I scroll down and wait for a second
+  Then I should see "Burnt Toast I Remember It"
+
+  When I scroll down and wait for a second
+  Then I should see the "oktobernight__Jellyfish_iStock" image
+
+  When I scroll down and wait for a second
+  Then I should see "Thats Much Cooler Than Mine Flew Me To"
+
+  When I scroll down and wait for a second
+  Then I should see "Burning It Down Even Now Forever"
+
+  When I scroll down and wait for a second
+  Then I should see "Tribeca Just Trees Glowing In The Dark"
+
+  When I scroll down and wait for a second
+  Then I should see the "oktobernight__Jellyfish_iStock" image
+
+  When I scroll down and wait for a second
+  Then I should see the "done text" image
+  # https://placekitten.com/275/200
+  Then I should see the "200" image
+					</code></pre>
 				</section>
 				<section data-background="#fff">
-					<img src="http://s3.r29static.com//bin/public/b52/x/1505770/image.png" />
-					<img src="http://s1.r29static.com//bin/public/ec0/x/1505771/image.png" />
+				<h3 style="color: #5900b3">step_definitions/navigation_steps.rb</h3>
+				<pre><code>When /^I wait until I see the day of the week$/ do
+  step 'I wait to see "WEDNESDAY"'
+end
+
+When /^I scroll (.*) and wait for a second$/ do |direction|
+  step "I scroll #{direction}"
+  sleep 1
+end</code></pre>
+
+<h3 style="color: #5900b3; padding-top: 10%;">step_definitions/verification_steps.rb</h3>
+				<pre><code>Then /^I should see the "([^\"]*)" image$/ do |filename|
+  labels = query("RCTImageView").map{ |o| o["label"] }
+  expect(labels).to include(filename)
+end</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">3. Continuous Integration (CI)</h2>
@@ -141,7 +222,55 @@
 					</ul>
 				</section>
 				<section data-background="#fff">
-					<img src="http://s2.r29static.com//bin/public/620/x/1507938/image.png"/>
+					<h2 style="color: #5900b3; padding-top: 10%;">.travis.yml</h2>
+				<pre style="width: 100%; height: 100%"><code>osx_image: xcode7
+language: objective-c
+xcode_project: app/ThisAm.xcodeproj
+xcode_scheme: ThisAM-cal
+
+env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=features
+
+cache:
+  directories:
+    - app/node_modules
+    - $HOME/.rvm/gems
+
+before_install:
+  - brew update; brew update
+  - brew install watchman
+  - brew install nvm
+
+  - cd app
+
+  - mkdir ~/.nvm
+  - cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+  - export NVM_DIR=~/.nvm
+  - source $(brew --prefix nvm)/nvm.sh
+  - nvm install iojs-v2.3.4
+
+install:
+  - npm install
+  - if [[ "$TEST_SUITE" == "features" ]]; then
+      bundle
+      && gem install xcpretty
+      && gem install xcpretty-travis-formatter
+    ;fi
+
+before_script:
+  - (if [[ "$TEST_SUITE" == "features" ]]; then npm start; fi) &
+  - if [[ "$TEST_SUITE" == "features" ]]; then sleep 90; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then curl http://127.0.0.1:8080/index.ios.bundle > /dev/null; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then
+      set -o pipefail
+      && npm run xcbuild-cal | xcpretty -c -f `xcpretty-travis-formatter`
+    ;fi
+
+script:
+  - if [[ "$TEST_SUITE" == "unit" ]]; then npm test; fi
+  - if [[ "$TEST_SUITE" == "features" ]]; then DEVICE_TARGET="iPhone 5s (9.0)" cucumber spec/; fi
+</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #5900b3">Further optimizations to Travis build</h2>
@@ -166,11 +295,86 @@
 				</section>
 				<section data-background="#fff">
 					<p style="color: #6600cc">React-native-google-analytics came with support for tracking ScreenViews & PageViews out of the box, but we needed a way to account for custom dimensions:</p>
-					<img src="http://s2.r29static.com//bin/public/f54/x/1505414/image.png" />
+					<pre style="width: 100%; height: 100%"><code>'use strict';
+
+var _ = require('lodash');
+
+class Analytics {
+  constructor(trackingId, clientId, version) {
+    this.version = version || 1;
+    this.trackingId = trackingId;
+    this.clientId = clientId;
+    this.customDimensions = [];
+  }
+
+  setCustomDimension(cd) {
+    this.customDimensions.push(cd);
+  }
+
+  send(hit) {
+
+    hit.set({
+      v: this.version,
+      tid: this.trackingId,
+      cid: this.clientId
+    });
+
+    if (this.customDimensions.length) {
+      _.each(this.customDimensions, function(cd) {
+        _.mapKeys(cd, function(val, key) {
+          var obj = {};
+          obj[key] = val;
+          hit.set(obj);
+        });
+      });
+    }
+
+    fetch('https://ssl.google-analytics.com/collect', {
+      method: 'post',
+      body: hit.toQueryString()
+    });
+  }
+}
+
+module.exports = Analytics;
+					</code></pre>
 				</section>
 				<section data-background="#fff">
 					<p style="color: #6600cc">Now, whenever we want to send a custom dimension we can use it as follows:</p>
-					<img src="http://s3.r29static.com//bin/public/06a/x/1505418/image.png" />
+					<pre style="width: 100%; height: 100%"><code>const APP_NAME = "ThisAM";
+const APP_VERSION = "1";
+const APP_ID = "com.refinery29.thisAM";
+const TRACKING_ID = 'UA-315022-15';
+
+import {
+  Analytics,
+  Hits as GAHits,
+  Tracking as GATracking
+} from 'react-native-google-analytics';
+
+var React = require('react-native');
+var {NativeModules} = React;
+
+export default {
+  trackScreenView: function(screenName, date) {
+    GATracking.getClientId(function(err, clientId) {
+      var analytics = new Analytics(TRACKING_ID, clientId);
+      analytics.setCustomDimension({cd1: date});
+
+      var screenView = new GAHits.ScreenView(APP_NAME, APP_VERSION, APP_ID, clientId, screenName);
+      analytics.send(screenView);
+    });
+  },
+  trackEvent: function(category, action, label, date) {
+    GATracking.getClientId(function(err, clientId) {
+      var analytics = new Analytics(TRACKING_ID, clientId);
+      analytics.setCustomDimension({cd1: date});
+
+      var gaEvent = new GAHits.Event(category, action, label, 100);
+      analytics.send(gaEvent);
+    });
+  }
+};</code></pre>
 				</section>
 				<section data-background="#fff">
 					<h2 style="color: #6600cc">Community</h2>
